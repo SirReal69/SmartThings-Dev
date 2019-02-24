@@ -36,8 +36,8 @@ metadata {
     	
         multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4) {
     		tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
-                attributeState "on", label:'${name}', action:"switch.off", icon:"st.Office.office10", backgroundColor:"#44b621", nextState:"off"
-                attributeState "off", label:'${name}', action:"switch.on", icon:"st.Office.office10", backgroundColor:"#bc2323", nextState:"on"
+                attributeState "on", label:'${name}', action:"switch.off", icon:"st.Office.office10", backgroundColor:"#bc2323", nextState:"off"
+                attributeState "off", label:'${name}', action:"switch.on", icon:"st.Office.office10", backgroundColor:"#44b621", nextState:"on"
             }
           	tileAttribute ("device.combined", key: "SECONDARY_CONTROL") {
         		attributeState "combined", label:'${currentValue}', icon: "st.Electronics.electronics18"
@@ -121,10 +121,10 @@ def parse(response) {
     if (json.FTLnotrunning) {
     	return
     }
-    if (json.status == "enabled") {
+    if (json.status == "disabled") {
     	sendEvent(name: "switch", value: "on")
     }
-	if (json.status == "disabled") {
+	if (json.status == "enabled") {
     	sendEvent(name: "switch", value: "off")
     }
     if (json.dns_queries_today.toInteger() >= 0) {
@@ -137,11 +137,11 @@ def parse(response) {
 }
 
 def on() {
-	doSwitch("enable")
+	doSwitch("disable")
 }
 
 def off() {
-	doSwitch("disable")
+	doSwitch("enable")
 }
 
 def doSwitch(toggle) {
