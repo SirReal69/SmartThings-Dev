@@ -121,10 +121,10 @@ def parse(response) {
     if (json.FTLnotrunning) {
     	return
     }
-    if (json.status == "enabled") {
+    if (json.status == "disabled") {
     	sendEvent(name: "switch", value: "on")
     }
-	if (json.status == "disabled") {
+	if (json.status == "enabled") {
     	sendEvent(name: "switch", value: "off")
     }
     if (json.dns_queries_today.toInteger() >= 0) {
@@ -137,11 +137,11 @@ def parse(response) {
 }
 
 def on() {
-	doSwitch("enable")
+	doSwitch("disable")
 }
 
 def off() {
-	doSwitch("disable")
+	doSwitch("enable")
 }
 
 def doSwitch(toggle) {
